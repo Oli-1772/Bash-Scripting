@@ -1,0 +1,32 @@
+#!/bin/bash
+
+echo "please type in the IP address"
+read ip
+PS3='Please Enter Your Choice: '
+options=("Nmap Service Scan" "Nmap OS Detection" "Nmap Web Scan" "Quit")
+select opt in "${options[@]}"
+do 
+    case $opt in
+    "Nmap Service Scan")
+        echo "Starting service scan"
+        nmap $ip -sV -sC > nmapService.html
+        echo "Results have been printed to nmapService.html" 
+        exit
+        ;;
+    "Nmap OS Detection")
+        echo "Starting Operating System Detection"
+        nmap $ip -O > nmapOS.html
+        echo "Results have been printed to nmapOS.html"
+        exit
+        ;;
+    "Nmap Web Scan")
+        echo "Starting Web Scan"
+        nmap $ip --script=http-enum > nmapWeb.html
+        echo "Results have been printed to nmapWeb.html"    
+        ;;
+    "Quit")
+        break
+        ;;
+    *) echo "Invalid Option $REPLY";;
+    esac 
+done
